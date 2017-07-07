@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "dependencies": {
+    "auth0-js": "^8.8.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-google-login": "^2.9.2",
