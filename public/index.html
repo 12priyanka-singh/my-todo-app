@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
+    <meta name="google-signin-client_id" content="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"/>
     <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
@@ -22,10 +23,40 @@
     <title>React App</title>
   </head>
   <body>
+    
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
+    <!-- <h1>Click below to sign in</h1> -->
+    <div class="g-signin2" data-onsuccess="onSignIn"> </div>
+    <a href="#" onclick="signOut();">Sign out</a> 
+
+    <!-- <div id="my-signin2"></div> -->
+  <script>
+    function onSignIn(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    }
+
+    function onFailure(error) {
+      console.log(error)
+    }
+
+    function signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      });
+    } 
+     
+  </script>
+
+  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
