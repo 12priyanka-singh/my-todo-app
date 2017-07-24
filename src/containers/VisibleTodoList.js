@@ -14,8 +14,14 @@ const getVisibleTodos = (todos, filter) => {
 }
 
 const mapStateToProps = state => {
+  const loginUser = window.localStorage.getItem('loginUser');
+  let todos = [];
+  if (state.todos[loginUser] && state.todos[loginUser]) {
+    todos = state.todos[loginUser];
+  }
+
   return {
-    todos: getVisibleTodos(state.todos, state.visibilityFilter)
+    todos: getVisibleTodos(todos, state.visibilityFilter)
   }
 }
 

@@ -23,19 +23,35 @@
     <title>React App</title>
   </head>
   <body>
-    
+
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
     <!-- <h1>Click below to sign in</h1> -->
     <div class="g-signin2" data-onsuccess="onSignIn"> </div>
-    <a href="#" onclick="signOut();">Sign out</a> 
+    <a href="#" onclick="signOut();">Sign out</a>
 
     <!-- <div id="my-signin2"></div> -->
   <script>
     function onSignIn(googleUser) {
       var profile = googleUser.getBasicProfile();
+      if (window.localStorage) {
+        var users = window.localStorage.getItem('users');
+        if (users) {
+          users = JSON.parse(users);
+          // If users are found, check if the user exists in array
+          if (users.indexOf(profile.getEmail()) === -1) {
+            users = users.concat(profile.getEmail());
+            window.localStorage.setItem('users', JSON.stringify(users));
+          }
+        } else {
+          users = [].concat(profile.getEmail());
+          window.localStorage.setItem('users', JSON.stringify(users));
+        }
+        // Set logged in user in storage
+        window.localStorage.setItem('loginUser', profile.getEmail());
+      }
       console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
       console.log('Name: ' + profile.getName());
       console.log('Image URL: ' + profile.getImageUrl());
@@ -49,10 +65,11 @@
     function signOut() {
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(function () {
+        window.localStorage.removeItem('loginUser');
         console.log('User signed out.');
       });
-    } 
-     
+    }
+
   </script>
 
   <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>

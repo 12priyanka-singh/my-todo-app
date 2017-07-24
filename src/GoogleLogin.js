@@ -4,6 +4,12 @@ import GoogleLogin from 'react-google-login';
 
 const responseGoogle = (response) => {
   console.log(response);
+  if (window.localStorage) {
+    var users = window.localStorage.getItem('users');
+    if (users) {
+      users = JSON.parse(users);
+    }
+  }
 }
 
 ReactDOM.render(
